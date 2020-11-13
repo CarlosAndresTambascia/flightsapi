@@ -26,25 +26,22 @@ public class AppConfig {
 
         Properties props = new Properties();
         // Setting JDBC properties
-        props.put(DRIVER, env.getProperty("mysql.driver"));
-        props.put(URL, env.getProperty("mysql.url"));
-        props.put(USER, env.getProperty("mysql.user"));
-        props.put(PASS, env.getProperty("mysql.password"));
+        props.put(DRIVER, env.getProperty("spring.datasource.driver"));
+        props.put(URL, env.getProperty("spring.datasource.url"));
+        props.put(USER, env.getProperty("spring.datasource.username"));
+        props.put(PASS, env.getProperty("spring.datasource.password"));
 
         // Setting Hibernate properties
-        props.put(SHOW_SQL, env.getProperty("hibernate.show_sql"));
-        props.put(HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
+        props.put(SHOW_SQL, env.getProperty("spring.jpa.show-sql"));
+        props.put(HBM2DDL_AUTO, env.getProperty("spring.jpa.hibernate.ddl-auto"));
 
-        // Setting C3P0 properties
-        props.put(C3P0_MIN_SIZE, env.getProperty("hibernate.c3p0.min_size"));
-        props.put(C3P0_MAX_SIZE, env.getProperty("hibernate.c3p0.max_size"));
-        props.put(C3P0_ACQUIRE_INCREMENT,
-                env.getProperty("hibernate.c3p0.acquire_increment"));
-        props.put(C3P0_TIMEOUT, env.getProperty("hibernate.c3p0.timeout"));
-        props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
+        props.put(DIALECT, env.getProperty("spring.jpa.properties.hibernate.dialect"));
+        props.put(CURRENT_SESSION_CONTEXT_CLASS, env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
+        props.put(FORMAT_SQL, env.getProperty("spring.jpa.properties.hibernate.format_sql"));
+        props.put(NON_CONTEXTUAL_LOB_CREATION, env.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setPackagesToScan("com.bushansirgur.model");
+        factoryBean.setPackagesToScan("com.carlostambascia.model");
 
         return factoryBean;
     }

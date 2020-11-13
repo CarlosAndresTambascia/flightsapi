@@ -1,17 +1,21 @@
 package com.carlostambascia.model;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity(name = "Flight")
+@AllArgsConstructor
 public class Flight {
-    private final City departureCity;
-    private final City destinationCity;
-    private final LocalDate scheduledDepartureDateTime;
-    private final LocalDate estimatedDepartureDateTime;
-    private final String flightNumber;
-    private final String airline;
-    private final String airlineCode;
-    private final Integer gate;
-    private final Integer gate;
+    private City departureCity;
+    private City destinationCity;
+    private LocalDate scheduledDepartureDateTime;
+    private LocalDate estimatedDepartureDateTime;
+    private String flightNumber;
+    private String airline;
+    private String airlineCode;
+    private Integer gate;
+    private FlightStatus status;
+    private FlightPrice price;
 }

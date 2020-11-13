@@ -7,6 +7,6 @@ import javax.persistence.Entity;
 @Entity(name = "City")
 @AllArgsConstructor
 public class City {
-    private final String name;
-    private final String iataCode;
+    private String name;
+    private String iataCode;
 }
