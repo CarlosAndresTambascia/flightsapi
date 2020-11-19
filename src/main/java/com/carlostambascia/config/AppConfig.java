@@ -1,7 +1,10 @@
 package com.carlostambascia.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -14,9 +17,8 @@ import static org.hibernate.cfg.Environment.*;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@ComponentScans(value = {@ComponentScan("com.carlostambascia.dao"), @ComponentScan("com.carlostambascia.service")})
+@ComponentScan(value = "com.carlostambascia")
 public class AppConfig {
-
     @Autowired
     private Environment env;
 
@@ -26,19 +28,22 @@ public class AppConfig {
 
         Properties props = new Properties();
         // Setting JDBC properties
-        props.put(DRIVER, env.getProperty("spring.datasource.driver"));
-        props.put(URL, env.getProperty("spring.datasource.url"));
-        props.put(USER, env.getProperty("spring.datasource.username"));
-        props.put(PASS, env.getProperty("spring.datasource.password"));
+        props.put(DRIVER, env.getProperty("db.driver"));
+        props.put(URL, env.getProperty("db.url"));
+        props.put(USER, env.getProperty("db.user"));
+        props.put(PASS, env.getProperty("db.password"));
 
         // Setting Hibernate properties
-        props.put(SHOW_SQL, env.getProperty("spring.jpa.show-sql"));
-        props.put(HBM2DDL_AUTO, env.getProperty("spring.jpa.hibernate.ddl-auto"));
+        props.put(SHOW_SQL, env.getProperty("hibernate.show_sql"));
+        props.put(HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
 
-        props.put(DIALECT, env.getProperty("spring.jpa.properties.hibernate.dialect"));
-        props.put(CURRENT_SESSION_CONTEXT_CLASS, env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
-        props.put(FORMAT_SQL, env.getProperty("spring.jpa.properties.hibernate.format_sql"));
-        props.put(NON_CONTEXTUAL_LOB_CREATION, env.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
+        // Setting C3P0 properties
+        props.put(C3P0_MIN_SIZE, env.getProperty("hibernate.c3p0.min_size"));
+        props.put(C3P0_MAX_SIZE, env.getProperty("hibernate.c3p0.max_size"));
+        props.put(C3P0_ACQUIRE_INCREMENT,
+                env.getProperty("hibernate.c3p0.acquire_increment"));
+        props.put(C3P0_TIMEOUT, env.getProperty("hibernate.c3p0.timeout"));
+        props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
 
         factoryBean.setHibernateProperties(props);
         factoryBean.setPackagesToScan("com.carlostambascia.model");
