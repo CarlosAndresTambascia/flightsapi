@@ -4,26 +4,23 @@ import com.carlostambascia.model.City;
 import com.carlostambascia.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/api/city")
 public class CityController {
     @Autowired
     private CityService cityService;
 
-    @GetMapping("/city/{id}")
-    public ResponseEntity<City> get(@PathVariable("id") long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<City> get(@PathVariable("id")  long id) {
         City city = cityService.getCity(id);
         return ResponseEntity.ok().body(city);
     }
 
-    @GetMapping("/city")
+    @GetMapping("/")
     public ResponseEntity<List<City>> list() {
         List<City> list = cityService.list();
         return ResponseEntity.ok().body(list);

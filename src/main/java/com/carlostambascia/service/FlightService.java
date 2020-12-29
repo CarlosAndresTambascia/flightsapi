@@ -1,4 +1,4 @@
-package com.carlostambascia.dao;
+package com.carlostambascia.service;
 
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
@@ -6,7 +6,7 @@ import com.carlostambascia.model.FlightPrice;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface FlightDAO {
+public interface FlightService {
     List<Flight> getFlightsByDate(LocalDate date);
     Flight getFlightsById(String flightNumber);
     List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date);

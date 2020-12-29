@@ -1,12 +1,14 @@
 package com.carlostambascia.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "Flight")
 @AllArgsConstructor
+@Data
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
