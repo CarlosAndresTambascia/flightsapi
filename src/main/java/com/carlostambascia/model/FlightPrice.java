@@ -1,12 +1,15 @@
 package com.carlostambascia.model;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "FlightPrice")
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(value = AccessLevel.PACKAGE)
+@Getter
 public class FlightPrice {
     @Id
     @Column(name="ID")

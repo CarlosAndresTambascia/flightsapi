@@ -1,12 +1,15 @@
 package com.carlostambascia.model;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "City")
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(value = AccessLevel.PACKAGE)
+@Getter
 public class City {
     @Id
     private String iataCode;

@@ -1,14 +1,16 @@
 package com.carlostambascia.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "Flight")
-@AllArgsConstructor
-@Data
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(value = AccessLevel.PACKAGE)
+@Getter
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
