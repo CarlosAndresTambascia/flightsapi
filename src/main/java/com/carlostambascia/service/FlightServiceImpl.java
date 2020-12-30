@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class FlightServiceImpl implements FlightService{
+public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightDAO flightDAO;
 
@@ -23,22 +23,22 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public Flight getFlightsById(String flightNumber) {
-        return null;
+        return flightDAO.getFlightsById(flightNumber);
     }
 
     @Override
     public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date) {
-        return null;
+        return flightDAO.getFlightsFromDepartureByDate(iataCodeDeparture, date);
     }
 
     @Override
     public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date) {
-        return null;
+        return flightDAO.getFlightsFromDestinationByDate(iataCodeDestination, date);
     }
 
     @Override
     public List<Flight> getFlightsAirlineByDate(String airline, LocalDate date) {
-        return null;
+        return flightDAO.getFlightsAirlineByDate(airline, date);
     }
 
     @Override
@@ -49,5 +49,20 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public FlightPrice getFlightPrice(String flightNumber) {
         return null;
+    }
+
+    @Override
+    public void addFlightPrice(String flightNumber, FlightPrice price) {
+
+    }
+
+    @Override
+    public void updateFlightPrice(String flightNumber, FlightPrice price) {
+
+    }
+
+    @Override
+    public void removeFlightPrice(String flightNumber, String flightPriceId) {
+
     }
 }

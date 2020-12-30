@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class FlightDAOImpl implements FlightDAO {
     @Autowired
     private SessionFactory sessionFactory;
@@ -19,7 +20,6 @@ public class FlightDAOImpl implements FlightDAO {
         return sessionFactory.getCurrentSession();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Flight> getFlightsByDate(LocalDate date) {
         final String hql = "from Flight f where f.scheduledDepartureDateTime = ?";
@@ -35,17 +35,30 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date) {
-        return null;
+        final String hql = "from Flight f where f.scheduledDepartureDateTime = ? AND f.iataCode = ?";
+        return getCurrentSession().createQuery(hql)
+                .setParameter(0, date)
+                .setParameter(1, iataCodeDeparture)
+                .list();
     }
 
     @Override
     public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date) {
-        return null;
+        //TODO: fix this query
+        final String hql = "from Flight f where f.departureCity = ? AND f.iataCode = ?";
+        return getCurrentSession().createQuery(hql)
+                .setParameter(0, date)
+                .setParameter(1, iataCodeDestination)
+                .list();
     }
 
     @Override
     public List<Flight> getFlightsAirlineByDate(String airline, LocalDate date) {
-        return null;
+        final String hql = "from Flight f where f.airline = ? AND f.scheduledDepartureDateTime = ?";
+        return getCurrentSession().createQuery(hql)
+                .setParameter(0, airline)
+                .setParameter(1, date)
+                .list();
     }
 
     @Override
@@ -57,5 +70,20 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public FlightPrice getFlightPrice(String flightNumber) {
         return null;
+    }
+
+    @Override
+    public void addFlightPrice(String flightNumber, FlightPrice price) {
+
+    }
+
+    @Override
+    public void updateFlightPrice(String flightNumber, FlightPrice price) {
+
+    }
+
+    @Override
+    public void removeFlightPrice(String flightNumber, String flightPriceId) {
+
     }
 }

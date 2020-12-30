@@ -14,4 +14,7 @@ public interface FlightDAO {
     List<Flight> getFlightsAirlineByDate(String airline, LocalDate date);
     String addFlight(Flight flight);
     FlightPrice getFlightPrice(String flightNumber);
+    void addFlightPrice(String flightNumber, FlightPrice price);
+    void updateFlightPrice(String flightNumber, FlightPrice price);
+    void removeFlightPrice(String flightNumber, String flightPriceId);
 }

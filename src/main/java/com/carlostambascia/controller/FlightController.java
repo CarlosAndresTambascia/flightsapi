@@ -31,4 +31,20 @@ public class FlightController {
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{iataCode}/{scheduledDepartureDateTime}")
+    public ResponseEntity<?> getFromDepartureByDate(@PathVariable(name = "iataCode") String iataCode, @PathVariable(name = "scheduledDepartureDateTime") String scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsFromDepartureByDate(iataCode, LocalDate.parse(scheduledDepartureDateTime)))
+                .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{airline}/{scheduledDepartureDateTime}")
+    public ResponseEntity<?> getFlightsAirlineByDate(@PathVariable(name = "airline") String airline, @PathVariable(name = "scheduledDepartureDateTime") String scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsAirlineByDate(airline, LocalDate.parse(scheduledDepartureDateTime)))
+                .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
 }
