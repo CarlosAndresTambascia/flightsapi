@@ -14,11 +14,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class FlightServiceImpl implements FlightService{
     @Autowired
-    private FlightDAO cityDAO;
+    private FlightDAO flightDAO;
 
     @Override
     public List<Flight> getFlightsByDate(LocalDate date) {
-        return null;
+        return flightDAO.getFlightsByDate(date);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public long addFlight(Flight flight) {
-        return 0;
+    public String addFlight(Flight flight) {
+        return flightDAO.addFlight(flight);
     }
 
     @Override

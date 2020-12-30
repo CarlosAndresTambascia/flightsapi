@@ -2,7 +2,7 @@ package com.carlostambascia.controller;
 
 import com.carlostambascia.model.City;
 import com.carlostambascia.service.CityService;
-import io.vavr.control.Option;
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +21,7 @@ public class CityController {
 
     @GetMapping("/{iataCode}")
     public ResponseEntity<City> get(@PathVariable("iataCode")  String iataCode) {
-        final City city = cityService.getCity(iataCode);
-        return Option.of(city)
+        return Try.of(() -> cityService.getCity(iataCode))
                 .filter(Objects::nonNull)
                 .map(city1 -> ResponseEntity.ok().body(city1))
                 .getOrElse(ResponseEntity.notFound().build());
@@ -30,8 +29,9 @@ public class CityController {
 
     @GetMapping("/")
     public ResponseEntity<List<City>> list() {
-        final List<City> list = cityService.list();
-        return ResponseEntity.ok().body(list);
+        return Try.of(() -> cityService.list())
+                .filter(Objects::nonNull)
+                .map(cities -> ResponseEntity.ok().body(cities))
+                .getOrElse(ResponseEntity.notFound().build());
     }
-
 }

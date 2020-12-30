@@ -12,6 +12,6 @@ public interface FlightService {
     List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date);
     List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date);
     List<Flight> getFlightsAirlineByDate(String airline, LocalDate date);
-    long addFlight(Flight flight);
+    String addFlight(Flight flight);
     FlightPrice getFlightPrice(String flightNumber);
 }

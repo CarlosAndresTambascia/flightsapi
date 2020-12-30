@@ -19,9 +19,13 @@ public class FlightDAOImpl implements FlightDAO {
         return sessionFactory.getCurrentSession();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Flight> getFlightsByDate(LocalDate date) {
-        return null;//sessionFactory.getCurrentSession().find("from Flight").list();
+        final String hql = "from Flight f where f.scheduledDepartureDateTime = ?";
+        return getCurrentSession().createQuery(hql)
+                .setParameter(0, date)
+                .list();
     }
 
     @Override
@@ -45,9 +49,9 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public long addFlight(Flight flight) {
-        //sessionFactory.getCurrentSession().save(flight);
-        return 0;//flight.();
+    public String addFlight(Flight flight) {
+        sessionFactory.getCurrentSession().save(flight);
+        return flight.getFlightNumber();
     }
 
     @Override
