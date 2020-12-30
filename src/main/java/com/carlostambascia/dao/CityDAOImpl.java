@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CityDAOImpl implements CityDAO {
@@ -17,9 +18,14 @@ public class CityDAOImpl implements CityDAO {
         return sessionFactory.getCurrentSession();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public City getCity(long id) {
-        return getCurrentSession().get(City.class, id);
+    public City getCity(String iataCode) {
+        final String hql = "from City c where c.iataCode = ?";
+        Optional<City> city = getCurrentSession().createQuery(hql)
+                .setParameter(0, iataCode)
+                .uniqueResultOptional();
+        return city.orElse(null);
     }
 
     @SuppressWarnings("unchecked")

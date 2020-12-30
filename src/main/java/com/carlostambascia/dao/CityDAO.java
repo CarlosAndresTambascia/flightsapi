@@ -5,6 +5,6 @@ import com.carlostambascia.model.City;
 import java.util.List;
 
 public interface CityDAO {
-    City getCity(long id);
+    City getCity(String iataCode);
     List<City> list();
 }

@@ -15,8 +15,8 @@ public class CityServiceImpl implements CityService {
     private CityDAO cityDAO;
 
     @Override
-    public City getCity(long id) {
-        return cityDAO.getCity(id);
+    public City getCity(String iataCode) {
+        return cityDAO.getCity(iataCode);
     }
 
     @Override
