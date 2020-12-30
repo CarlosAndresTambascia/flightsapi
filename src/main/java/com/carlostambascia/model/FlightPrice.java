@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Getter
 public class FlightPrice {
     @Id
-    @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private BigDecimal firstClass;

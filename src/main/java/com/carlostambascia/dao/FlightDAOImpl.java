@@ -2,6 +2,8 @@ package com.carlostambascia.dao;
 
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
+import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Repository
 @SuppressWarnings("unchecked")
 public class FlightDAOImpl implements FlightDAO {
@@ -63,7 +66,8 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public String addFlight(Flight flight) {
-        sessionFactory.getCurrentSession().save(flight);
+        Try.of(() -> sessionFactory.getCurrentSession().save(flight))
+                .onFailure(e -> log.warn("There was an issue while saving the flight with the following exception -> " + e.getLocalizedMessage()));
         return flight.getFlightNumber();
     }
 
