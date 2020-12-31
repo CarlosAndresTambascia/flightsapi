@@ -3,6 +3,7 @@ package com.carlostambascia.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "Flight")
 @Builder(toBuilder = true)
@@ -18,8 +19,8 @@ public class Flight {
     private City departureCity;
     @OneToOne(cascade = CascadeType.ALL)
     private City destinationCity;
-    private String scheduledDepartureDateTime;
-    private String estimatedDepartureDateTime;
+    private Date scheduledDepartureDateTime;
+    private Date estimatedDepartureDateTime;
     private String airline;
     private String airlineCode;
     private Integer gate;

@@ -20,7 +20,7 @@ public class FlightController {
     public ResponseEntity<?> save(@RequestBody Flight flight) {
         return Try.of(() -> flightService.addFlight(flight))
                 .filter(Objects::nonNull)
-                .map(flightNumber -> ResponseEntity.ok().body("The flight with id" + flightNumber + "was successfully saved."))
+                .map(flightNumber -> ResponseEntity.ok().body("The flight with id " + flightNumber + " was successfully saved."))
                 .getOrElse(ResponseEntity.badRequest().build());
     }
 

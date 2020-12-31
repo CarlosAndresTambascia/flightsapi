@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightDAO flightDAO;
