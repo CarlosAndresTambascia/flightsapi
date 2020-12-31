@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -24,10 +24,10 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<Flight> getFlightsByDate(LocalDate date) {
+    public List<Flight> getFlightsByDate(Date date) {
         final String hql = "from Flight f where f.scheduledDepartureDateTime = ?";
         return getCurrentSession().createQuery(hql)
-                .setParameter(0, date)
+                .setParameter(0, new Date(date.getTime() + (1000 * 60 * 60 * 24)))
                 .list();
     }
 
@@ -37,7 +37,7 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date) {
+    public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, Date date) {
         final String hql = "from Flight f where f.scheduledDepartureDateTime = ? AND f.iataCode = ?";
         return getCurrentSession().createQuery(hql)
                 .setParameter(0, date)
@@ -46,7 +46,7 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date) {
+    public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, Date date) {
         //TODO: fix this query
         final String hql = "from Flight f where f.departureCity = ? AND f.iataCode = ?";
         return getCurrentSession().createQuery(hql)
@@ -56,7 +56,7 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<Flight> getFlightsAirlineByDate(String airline, LocalDate date) {
+    public List<Flight> getFlightsAirlineByDate(String airline, Date date) {
         final String hql = "from Flight f where f.airline = ? AND f.scheduledDepartureDateTime = ?";
         return getCurrentSession().createQuery(hql)
                 .setParameter(0, airline)

@@ -3,15 +3,15 @@ package com.carlostambascia.dao;
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface FlightDAO {
-    List<Flight> getFlightsByDate(LocalDate date);
+    List<Flight> getFlightsByDate(Date date);
     Flight getFlightsById(String flightNumber);
-    List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date);
-    List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date);
-    List<Flight> getFlightsAirlineByDate(String airline, LocalDate date);
+    List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, Date date);
+    List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, Date date);
+    List<Flight> getFlightsAirlineByDate(String airline, Date date);
     String addFlight(Flight flight);
     FlightPrice getFlightPrice(String flightNumber);
     void addFlightPrice(String flightNumber, FlightPrice price);

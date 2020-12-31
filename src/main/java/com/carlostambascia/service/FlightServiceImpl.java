@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,7 +17,7 @@ public class FlightServiceImpl implements FlightService {
     private FlightDAO flightDAO;
 
     @Override
-    public List<Flight> getFlightsByDate(LocalDate date) {
+    public List<Flight> getFlightsByDate(Date date) {
         return flightDAO.getFlightsByDate(date);
     }
 
@@ -27,17 +27,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, LocalDate date) {
+    public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, Date date) {
         return flightDAO.getFlightsFromDepartureByDate(iataCodeDeparture, date);
     }
 
     @Override
-    public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, LocalDate date) {
+    public List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, Date date) {
         return flightDAO.getFlightsFromDestinationByDate(iataCodeDestination, date);
     }
 
     @Override
-    public List<Flight> getFlightsAirlineByDate(String airline, LocalDate date) {
+    public List<Flight> getFlightsAirlineByDate(String airline, Date date) {
         return flightDAO.getFlightsAirlineByDate(airline, date);
     }
 

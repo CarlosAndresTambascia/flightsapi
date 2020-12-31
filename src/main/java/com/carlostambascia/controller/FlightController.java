@@ -4,11 +4,14 @@ import com.carlostambascia.model.Flight;
 import com.carlostambascia.service.FlightService;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
+
+import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
 
 @RestController
 @RequestMapping(value = "/api/flight")
@@ -25,24 +28,24 @@ public class FlightController {
     }
 
     @GetMapping("/{date}")
-    public ResponseEntity<?> getByDepartureDate(@PathVariable(name = "date") String date) {
-        return Try.of(() -> flightService.getFlightsByDate(LocalDate.parse(date)))
+    public ResponseEntity<?> getByDepartureDate(@PathVariable(name = "date") @DateTimeFormat(iso= DATE) Date date) {
+        return Try.of(() -> flightService.getFlightsByDate(date))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{iataCode}/{scheduledDepartureDateTime}")
-    public ResponseEntity<?> getFromDepartureByDate(@PathVariable(name = "iataCode") String iataCode, @PathVariable(name = "scheduledDepartureDateTime") String scheduledDepartureDateTime) {
-        return Try.of(() -> flightService.getFlightsFromDepartureByDate(iataCode, LocalDate.parse(scheduledDepartureDateTime)))
+    public ResponseEntity<?> getFromDepartureByDate(@PathVariable(name = "iataCode") String iataCode, @PathVariable(name = "scheduledDepartureDateTime") Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsFromDepartureByDate(iataCode, scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{airline}/{scheduledDepartureDateTime}")
-    public ResponseEntity<?> getFlightsAirlineByDate(@PathVariable(name = "airline") String airline, @PathVariable(name = "scheduledDepartureDateTime") String scheduledDepartureDateTime) {
-        return Try.of(() -> flightService.getFlightsAirlineByDate(airline, LocalDate.parse(scheduledDepartureDateTime)))
+    public ResponseEntity<?> getFlightsAirlineByDate(@PathVariable(name = "airline") String airline, @PathVariable(name = "scheduledDepartureDateTime") Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsAirlineByDate(airline, scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());

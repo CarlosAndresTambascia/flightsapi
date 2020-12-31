@@ -1,6 +1,7 @@
 package com.carlostambascia.dao;
 
 import com.carlostambascia.model.City;
+import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Getter
 @SuppressWarnings("unchecked")
 public class CityDAOImpl implements CityDAO {
     @Autowired
