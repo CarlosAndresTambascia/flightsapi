@@ -27,24 +27,43 @@ public class FlightController {
                 .getOrElse(ResponseEntity.badRequest().build());
     }
 
-    @GetMapping("/{date}")
-    public ResponseEntity<?> getByDepartureDate(@PathVariable(name = "date") @DateTimeFormat(iso= DATE) Date date) {
-        return Try.of(() -> flightService.getFlightsByDate(date))
+    @GetMapping(value = "/", params = "flightNumber")
+    public ResponseEntity<?> getFlightsById(@RequestParam("flightNumber") Integer flightNumber) {
+        return Try.of(() -> flightService.getFlightsById(flightNumber))
+                .filter(Objects::nonNull)
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/", params = {"destinationIataCode", "scheduledDepartureDateTime"})
+    public ResponseEntity<?> getFlightsFromDestinationByDate(@RequestParam("destinationIataCode") String destinationIataCode,
+                                                             @RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsFromDestinationByDate(destinationIataCode, scheduledDepartureDateTime))
+                .filter(Objects::nonNull)
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/", params = "scheduledDepartureDateTime")
+    public ResponseEntity<?> getByDepartureDate(@RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsByDate(scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{iataCode}/{scheduledDepartureDateTime}")
-    public ResponseEntity<?> getFromDepartureByDate(@PathVariable(name = "iataCode") String iataCode, @PathVariable(name = "scheduledDepartureDateTime") Date scheduledDepartureDateTime) {
-        return Try.of(() -> flightService.getFlightsFromDepartureByDate(iataCode, scheduledDepartureDateTime))
+    @GetMapping(value = "/", params = {"scheduledDepartureDateTime", "departureIataCode"})
+    public ResponseEntity<?> getFromDepartureByDate(@RequestParam("departureIataCode") String departureIataCode,
+                                                    @RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsFromDepartureByDate(departureIataCode, scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{airline}/{scheduledDepartureDateTime}")
-    public ResponseEntity<?> getFlightsAirlineByDate(@PathVariable(name = "airline") String airline, @PathVariable(name = "scheduledDepartureDateTime") Date scheduledDepartureDateTime) {
+    @GetMapping(value = "/", params = {"airline", "scheduledDepartureDateTime"})
+    public ResponseEntity<?> getFlightsAirlineByDate(@RequestParam("airline") String airline,
+                                                     @RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
         return Try.of(() -> flightService.getFlightsAirlineByDate(airline, scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
                 .map(flights -> ResponseEntity.ok().body(flights))

@@ -22,7 +22,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight getFlightsById(String flightNumber) {
+    public Flight getFlightsById(Integer flightNumber) {
         return flightDAO.getFlightsById(flightNumber);
     }
 
@@ -42,7 +42,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public String addFlight(Flight flight) {
+    public Integer addFlight(Flight flight) {
         return flightDAO.addFlight(flight);
     }
 

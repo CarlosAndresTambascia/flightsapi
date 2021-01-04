@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface FlightService {
     List<Flight> getFlightsByDate(Date date);
-    Flight getFlightsById(String flightNumber);
+    Flight getFlightsById(Integer flightNumber);
     List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, Date date);
     List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, Date date);
     List<Flight> getFlightsAirlineByDate(String airline, Date date);
-    String addFlight(Flight flight);
+    Integer addFlight(Flight flight);
     FlightPrice getFlightPrice(String flightNumber);
 
     void addFlightPrice(String flightNumber, FlightPrice price);

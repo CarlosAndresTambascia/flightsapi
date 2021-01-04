@@ -14,7 +14,7 @@ import java.util.Date;
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String flightNumber;
+    private Integer flightNumber;
     @OneToOne(cascade = CascadeType.ALL)
     private City departureCity;
     @OneToOne(cascade = CascadeType.ALL)
