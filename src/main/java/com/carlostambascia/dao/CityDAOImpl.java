@@ -2,20 +2,20 @@ package com.carlostambascia.dao;
 
 import com.carlostambascia.model.City;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
+import javax.inject.Named;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Named
 @Getter
+@RequiredArgsConstructor
 @SuppressWarnings("unchecked")
 public class CityDAOImpl implements CityDAO {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     private Session getCurrentSession() {
         return sessionFactory.getCurrentSession();

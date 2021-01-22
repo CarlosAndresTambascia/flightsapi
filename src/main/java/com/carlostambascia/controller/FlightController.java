@@ -3,7 +3,7 @@ package com.carlostambascia.controller;
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.service.FlightService;
 import io.vavr.control.Try;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.Objects;
 
-import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 @RestController
 @RequestMapping(value = "/api/flight")
+@RequiredArgsConstructor
 public class FlightController {
-    @Autowired
-    private FlightService flightService;
+    private final FlightService flightService;
 
     @PostMapping("/")
     public ResponseEntity<?> save(@RequestBody Flight flight) {

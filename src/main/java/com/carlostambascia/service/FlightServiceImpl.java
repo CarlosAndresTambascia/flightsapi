@@ -3,7 +3,7 @@ package com.carlostambascia.service;
 import com.carlostambascia.dao.FlightDAO;
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class FlightServiceImpl implements FlightService {
-    @Autowired
-    private FlightDAO flightDAO;
+    private final FlightDAO flightDAO;
 
     @Override
     public List<Flight> getFlightsByDate(Date date) {

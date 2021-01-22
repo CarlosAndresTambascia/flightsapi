@@ -5,7 +5,7 @@ import com.carlostambascia.security.model.AuthRequest;
 import com.carlostambascia.security.model.AuthResponse;
 import com.carlostambascia.service.UserServiceImpl;
 import io.vavr.control.Try;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,13 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/auth")
 public class AuthenticationController implements JwtCommon {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserServiceImpl usrService;
+    private final AuthenticationManager authenticationManager;
+    private final UserServiceImpl usrService;
 
     @PostMapping("/")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) {

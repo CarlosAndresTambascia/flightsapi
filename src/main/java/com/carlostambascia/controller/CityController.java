@@ -3,7 +3,7 @@ package com.carlostambascia.controller;
 import com.carlostambascia.model.City;
 import com.carlostambascia.service.CityService;
 import io.vavr.control.Try;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +15,9 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/city")
+@RequiredArgsConstructor
 public class CityController {
-    @Autowired
-    private CityService cityService;
+    private final CityService cityService;
 
     @GetMapping("/{iataCode}")
     public ResponseEntity<City> get(@PathVariable("iataCode")  String iataCode) {
@@ -29,7 +29,7 @@ public class CityController {
 
     @GetMapping("/")
     public ResponseEntity<List<City>> list() {
-        return Try.of(() -> cityService.list())
+        return Try.of(cityService::list)
                 .filter(Objects::nonNull)
                 .map(cities -> ResponseEntity.ok().body(cities))
                 .getOrElse(ResponseEntity.notFound().build());

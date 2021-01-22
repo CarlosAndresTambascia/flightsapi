@@ -3,22 +3,22 @@ package com.carlostambascia.dao;
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
 import io.vavr.control.Try;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
+import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Repository
+@Named
+@RequiredArgsConstructor
 @SuppressWarnings("unchecked")
 public class FlightDAOImpl implements FlightDAO {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     private Session getCurrentSession() {
         return sessionFactory.getCurrentSession();

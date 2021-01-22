@@ -1,6 +1,6 @@
 package com.carlostambascia.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,14 +13,17 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity
-public class securityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userService;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+import javax.inject.Inject;
 
-    @Autowired
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class securityConfig extends WebSecurityConfigurerAdapter {
+    public static final String READ_ACCESS = "SCOPE_read";
+
+    private final UserDetailsService userService;
+    private final  JwtRequestFilter jwtRequestFilter;
+
+    @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
     }
@@ -40,8 +43,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/")
-                .permitAll()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/auth/**", "/reservations/**").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

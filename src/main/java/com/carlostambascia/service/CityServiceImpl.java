@@ -2,7 +2,7 @@ package com.carlostambascia.service;
 
 import com.carlostambascia.dao.CityDAO;
 import com.carlostambascia.model.City;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
-    @Autowired
-    private CityDAO cityDAO;
+    private final CityDAO cityDAO;
 
     @Override
     public City getCity(String iataCode) {
