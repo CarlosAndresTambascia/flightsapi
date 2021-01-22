@@ -4,13 +4,13 @@ import com.carlostambascia.dao.FlightDAO;
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
 
-@Service
+@Named
 @Transactional
 @RequiredArgsConstructor
 public class FlightServiceImpl implements FlightService {
