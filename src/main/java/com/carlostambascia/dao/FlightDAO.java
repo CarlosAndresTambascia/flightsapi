@@ -13,8 +13,8 @@ public interface FlightDAO {
     List<Flight> getFlightsFromDestinationByDate(String iataCodeDestination, Date date);
     List<Flight> getFlightsAirlineByDate(String airline, Date date);
     Integer addFlight(Flight flight);
-    FlightPrice getFlightPrice(String flightNumber);
-    void addFlightPrice(String flightNumber, FlightPrice price);
-    void updateFlightPrice(String flightNumber, FlightPrice price);
-    void removeFlightPrice(String flightNumber, String flightPriceId);
+    FlightPrice getFlightPrice(Integer flightNumber);
+    void addFlightPrice(Integer flightNumber, FlightPrice price);
+    void updateFlightPrice(Integer flightNumber, FlightPrice price);
+    void removeFlightPrice(Integer flightNumber, String flightPriceId);
 }

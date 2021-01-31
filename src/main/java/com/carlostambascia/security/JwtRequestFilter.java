@@ -28,20 +28,15 @@ public class JwtRequestFilter extends OncePerRequestFilter implements JwtCommon 
         final String authorizationHeader = request.getHeader("Authorization");
         String jwt = Option.of(authorizationHeader)
                 .filter(authHeader -> Objects.nonNull(authHeader) && authHeader.startsWith("Token: "))
-                .map(header ->  header.substring(7))
+                .map(header -> header.substring(7))
                 .getOrNull();
-         String userName = Option.of(jwt)
+        String userName = Option.of(jwt)
                 .filter(Objects::nonNull)
                 .map(this::extractUsername)
                 .getOrNull();
-
-
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userName);
-
             if (validateToken(jwt, userDetails)) {
-
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken

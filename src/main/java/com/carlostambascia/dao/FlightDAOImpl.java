@@ -76,22 +76,26 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public FlightPrice getFlightPrice(String flightNumber) {
-        return null;
+    public FlightPrice getFlightPrice(Integer flightNumber) {
+        final String hql = "select f.price from Flight f where f.flightNumber = ?";
+        final Optional<FlightPrice> price = getCurrentSession().createQuery(hql)
+                .setParameter(0, flightNumber)
+                .uniqueResultOptional();
+        return price.orElse(null);
     }
 
     @Override
-    public void addFlightPrice(String flightNumber, FlightPrice price) {
+    public void addFlightPrice(Integer flightNumber, FlightPrice price) {
 
     }
 
     @Override
-    public void updateFlightPrice(String flightNumber, FlightPrice price) {
+    public void updateFlightPrice(Integer flightNumber, FlightPrice price) {
 
     }
 
     @Override
-    public void removeFlightPrice(String flightNumber, String flightPriceId) {
+    public void removeFlightPrice(Integer flightNumber, String flightPriceId) {
 
     }
 }

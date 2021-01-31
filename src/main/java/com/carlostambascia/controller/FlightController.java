@@ -69,4 +69,12 @@ public class FlightController {
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping(value = "/price/", params = "flightNumber")
+    public ResponseEntity<?> getFlightsPrice(@RequestParam("flightNumber") Integer flightNumber) {
+        return Try.of(() -> flightService.getFlightPrice(flightNumber))
+                .filter(Objects::nonNull)
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
 }
