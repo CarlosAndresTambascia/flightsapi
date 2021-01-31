@@ -30,7 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter implements JwtCommon 
                 .filter(authHeader -> Objects.nonNull(authHeader) && authHeader.startsWith("Token: "))
                 .map(header ->  header.substring(7))
                 .getOrNull();
-        String userName = Option.of(jwt)
+         String userName = Option.of(jwt)
                 .filter(Objects::nonNull)
                 .map(this::extractUsername)
                 .getOrNull();
