@@ -14,8 +14,7 @@ public interface FlightService {
     List<Flight> getFlightsAirlineByDate(String airline, Date date);
     Integer addFlight(Flight flight);
     FlightPrice getFlightPrice(Integer flightNumber);
-
-    void addFlightPrice(Integer flightNumber, FlightPrice price);
-    void updateFlightPrice(Integer flightNumber, FlightPrice price);
-    void removeFlightPrice(Integer flightNumber, String flightPriceId);
+    Integer addFlightPrice(Integer flightNumber, FlightPrice price);
+    Integer updateFlightPrice(Integer flightNumber, FlightPrice price);
+    Integer removeFlightPrice(Integer flightNumber, String flightPriceId);
 }

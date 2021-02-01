@@ -1,6 +1,7 @@
 package com.carlostambascia.controller;
 
 import com.carlostambascia.model.Flight;
+import com.carlostambascia.model.FlightPrice;
 import com.carlostambascia.service.FlightService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
@@ -76,5 +77,13 @@ public class FlightController {
                 .filter(Objects::nonNull)
                 .map(flights -> ResponseEntity.ok().body(flights))
                 .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping(value = "/price/",  params = "flightNumber")
+    public ResponseEntity<?> addFlightPrice(@RequestParam("flightNumber") Integer flightNumber, @RequestBody FlightPrice price) {
+        return Try.of(() -> flightService.addFlightPrice(flightNumber, price))
+                .filter(Objects::nonNull)
+                .map(id -> ResponseEntity.ok().body("The price of the flight number " + id + " was successfully saved."))
+                .getOrElse(ResponseEntity.badRequest().build());
     }
 }

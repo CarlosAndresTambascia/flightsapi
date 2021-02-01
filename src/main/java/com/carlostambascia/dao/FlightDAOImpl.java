@@ -85,17 +85,21 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public void addFlightPrice(Integer flightNumber, FlightPrice price) {
-
+    public Integer addFlightPrice(Integer flightNumber, FlightPrice price) {
+        final Flight flight = getFlightsById(flightNumber);
+        final Flight flightWithNewPrice = flight.toBuilder().price(price).build();
+        Try.of(() -> sessionFactory.getCurrentSession().merge(flightWithNewPrice))
+                .onFailure(e -> log.warn("There was an issue while updating flight price information with the following exception -> " + e.getLocalizedMessage()));
+        return flightWithNewPrice.getFlightNumber();
     }
 
     @Override
-    public void updateFlightPrice(Integer flightNumber, FlightPrice price) {
-
+    public Integer updateFlightPrice(Integer flightNumber, FlightPrice price) {
+        return null;
     }
 
     @Override
-    public void removeFlightPrice(Integer flightNumber, String flightPriceId) {
-
+    public Integer removeFlightPrice(Integer flightNumber, String flightPriceId) {
+        return null;
     }
 }

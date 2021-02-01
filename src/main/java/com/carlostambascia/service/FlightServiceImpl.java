@@ -52,17 +52,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void addFlightPrice(Integer flightNumber, FlightPrice price) {
-
+    public Integer addFlightPrice(Integer flightNumber, FlightPrice price) {
+        return flightDAO.addFlightPrice(flightNumber, price);
     }
 
     @Override
-    public void updateFlightPrice(Integer flightNumber, FlightPrice price) {
-
+    public Integer updateFlightPrice(Integer flightNumber, FlightPrice price) {
+        return null;
     }
 
     @Override
-    public void removeFlightPrice(Integer flightNumber, String flightPriceId) {
-
+    public Integer removeFlightPrice(Integer flightNumber, String flightPriceId) {
+        return null;
     }
 }
