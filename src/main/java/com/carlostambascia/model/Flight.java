@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "Flight")
 @Builder(toBuilder = true)
@@ -27,6 +28,6 @@ public class Flight {
     @Column(name = "STATUS", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private FlightStatus status;
-    @OneToOne(cascade = CascadeType.ALL)
-    private FlightPrice price;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<FlightPrice> price;
 }

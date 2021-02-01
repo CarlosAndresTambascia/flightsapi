@@ -15,6 +15,6 @@ public interface FlightService {
     Integer addFlight(Flight flight);
     FlightPrice getFlightPrice(Integer flightNumber);
     Integer addFlightPrice(Integer flightNumber, FlightPrice price);
-    Integer updateFlightPrice(Integer flightNumber, FlightPrice price);
-    Integer removeFlightPrice(Integer flightNumber, String flightPriceId);
+    Integer updateFlightPrice(Integer flightNumber, FlightPrice price, Integer priceId);
+    Integer removeFlightPrice(Integer flightNumber, Integer flightPriceId);
 }

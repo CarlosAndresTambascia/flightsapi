@@ -2,6 +2,7 @@ package com.carlostambascia.dao;
 
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +10,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.inject.Named;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static io.vavr.API.*;
 
 @Slf4j
 @Named
@@ -70,7 +71,7 @@ public class FlightDAOImpl implements FlightDAO {
 
     @Override
     public Integer addFlight(Flight flight) {
-        Try.of(() -> sessionFactory.getCurrentSession().save(flight))
+        Try.of(() -> getCurrentSession().save(flight))
                 .onFailure(e -> log.warn("There was an issue while saving the flight with the following exception -> " + e.getLocalizedMessage()));
         return flight.getFlightNumber();
     }
@@ -87,19 +88,54 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public Integer addFlightPrice(Integer flightNumber, FlightPrice price) {
         final Flight flight = getFlightsById(flightNumber);
-        final Flight flightWithNewPrice = flight.toBuilder().price(price).build();
-        Try.of(() -> sessionFactory.getCurrentSession().merge(flightWithNewPrice))
-                .onFailure(e -> log.warn("There was an issue while updating flight price information with the following exception -> " + e.getLocalizedMessage()));
-        return flightWithNewPrice.getFlightNumber();
+        final List<FlightPrice> prices = Option.of(flight)
+                .flatMap(f -> Option.of(f.getPrice()))
+                .peek(listOfPrices -> listOfPrices.add(price))
+                .getOrElse(Collections.emptyList());
+         return Match(prices.isEmpty()).of(
+                Case($(false), () -> {
+                    Flight flightWithNewPrice = flight.toBuilder().price(prices).build();
+                    getCurrentSession().merge(flightWithNewPrice);
+                    return prices.size();
+                }),
+                Case($(), () -> null));
     }
 
     @Override
-    public Integer updateFlightPrice(Integer flightNumber, FlightPrice price) {
-        return null;
+    public Integer updateFlightPrice(Integer flightNumber, FlightPrice price, Integer priceId) {
+        final Flight flight = getFlightsById(flightNumber);
+        List<FlightPrice> flightPrices = Option.of(flight)
+                .filter(Objects::nonNull)
+                .map(Flight::getPrice)
+                .getOrNull();
+        Option.of(flightPrices)
+                .getOrNull()
+                .stream()
+                .filter(id -> id.getId().equals(priceId))
+                .findFirst()
+                .map(flightPrices::remove);
+        flightPrices.add(price.withId(priceId));
+        flightPrices.sort(Comparator.comparing(FlightPrice::getId));
+        final Flight flightWithNewPrice = flight.toBuilder().price(flightPrices).build();
+        sessionFactory.getCurrentSession().saveOrUpdate(flightWithNewPrice);
+        return priceId;
     }
 
     @Override
-    public Integer removeFlightPrice(Integer flightNumber, String flightPriceId) {
-        return null;
+    public Integer removeFlightPrice(Integer flightNumber, Integer priceId) {
+        final Flight flight = getFlightsById(flightNumber);
+        List<FlightPrice> flightPrices = Option.of(flight)
+                .filter(Objects::nonNull)
+                .map(Flight::getPrice)
+                .getOrNull();
+        Option.of(flightPrices)
+                .getOrNull()
+                .stream()
+                .filter(price -> price.getId().equals(priceId))
+                .findFirst()
+                .map(flightPrices::remove);
+        final Flight flightWithNewPrice = flight.toBuilder().price(flightPrices).build();
+        sessionFactory.getCurrentSession().merge(flightWithNewPrice);
+        return priceId;
     }
 }

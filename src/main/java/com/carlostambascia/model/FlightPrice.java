@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
+@With
 public class FlightPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

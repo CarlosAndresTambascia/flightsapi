@@ -83,7 +83,23 @@ public class FlightController {
     public ResponseEntity<?> addFlightPrice(@RequestParam("flightNumber") Integer flightNumber, @RequestBody FlightPrice price) {
         return Try.of(() -> flightService.addFlightPrice(flightNumber, price))
                 .filter(Objects::nonNull)
-                .map(id -> ResponseEntity.ok().body("The price of the flight number " + id + " was successfully saved."))
-                .getOrElse(ResponseEntity.badRequest().build());
+                .map(numberOfPrices -> ResponseEntity.ok().body("The price was added successfully now you have " + numberOfPrices + " in the flight number " + flightNumber))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(value = "/price/",  params = {"flightNumber", "priceId"})
+    public ResponseEntity<?> updateFlightPrice(@RequestParam("flightNumber") Integer flightNumber, @RequestBody FlightPrice price, @RequestParam("priceId") Integer priceId) {
+        return Try.of(() -> flightService.updateFlightPrice(flightNumber, price, priceId))
+                .filter(Objects::nonNull)
+                .map(id -> ResponseEntity.ok().body("The price with id " + priceId + " and flight number " + flightNumber + " was successfully updated."))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping(value = "/price/",  params = {"flightNumber", "priceId"})
+    public ResponseEntity<?> removeFlightPrice(@RequestParam("flightNumber") Integer flightNumber, @RequestParam("priceId") Integer priceId) {
+        return Try.of(() -> flightService.removeFlightPrice(flightNumber, priceId))
+                .filter(Objects::nonNull)
+                .map(id -> ResponseEntity.ok().body("The price with id " + id + " and flight number " + flightNumber + " was successfully removed."))
+                .getOrElse(ResponseEntity.notFound().build());
     }
 }
