@@ -20,7 +20,11 @@ public class Flight {
     private City departureCity;
     @OneToOne(cascade = CascadeType.ALL)
     private City destinationCity;
+    @Basic
+    @Temporal(TemporalType.DATE)
     private Date scheduledDepartureDateTime;
+    @Basic
+    @Temporal(TemporalType.DATE)
     private Date estimatedDepartureDateTime;
     private String airline;
     private String airlineCode;

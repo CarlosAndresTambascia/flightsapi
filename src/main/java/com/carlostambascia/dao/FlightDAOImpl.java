@@ -104,7 +104,7 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public Integer updateFlightPrice(Integer flightNumber, FlightPrice price, Integer priceId) {
         final Flight flight = getFlightsById(flightNumber);
-        List<FlightPrice> flightPrices = Option.of(flight)
+        final List<FlightPrice> flightPrices = Option.of(flight)
                 .filter(Objects::nonNull)
                 .map(Flight::getPrice)
                 .getOrNull();
@@ -117,14 +117,14 @@ public class FlightDAOImpl implements FlightDAO {
         flightPrices.add(price.withId(priceId));
         flightPrices.sort(Comparator.comparing(FlightPrice::getId));
         final Flight flightWithNewPrice = flight.toBuilder().price(flightPrices).build();
-        sessionFactory.getCurrentSession().saveOrUpdate(flightWithNewPrice);
+        sessionFactory.getCurrentSession().merge(flightWithNewPrice);
         return priceId;
     }
 
     @Override
     public Integer removeFlightPrice(Integer flightNumber, Integer priceId) {
         final Flight flight = getFlightsById(flightNumber);
-        List<FlightPrice> flightPrices = Option.of(flight)
+        final List<FlightPrice> flightPrices = Option.of(flight)
                 .filter(Objects::nonNull)
                 .map(Flight::getPrice)
                 .getOrNull();

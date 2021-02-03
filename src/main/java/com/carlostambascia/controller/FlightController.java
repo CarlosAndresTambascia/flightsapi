@@ -20,7 +20,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 public class FlightController {
     private final FlightService flightService;
 
-    @PostMapping("/")
+    @PostMapping("/new/")
     public ResponseEntity<?> save(@RequestBody Flight flight) {
         return Try.of(() -> flightService.addFlight(flight))
                 .filter(Objects::nonNull)
