@@ -193,7 +193,6 @@ public class FlightServiceImplTest {
         assertThat(flightPrice.getFirstClass()).isEqualTo(FIRST_CLASS);
     }
 
-
     private Flight.FlightBuilder createFlightBuilder() {
         return Flight.builder()
                 .flightNumber(FLIGHT_NUMBER)
