@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "FlightPrice")
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
 @With

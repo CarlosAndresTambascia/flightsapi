@@ -8,8 +8,8 @@ import java.util.List;
 
 @Entity(name = "Flight")
 @Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
 public class Flight {
