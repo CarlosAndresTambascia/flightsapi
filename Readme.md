@@ -1,6 +1,6 @@
 # Spring MVC Application:
 
-[![CircleCI](https://circleci.com/gh/CarlosAndresTambascia/flightsapi.svg?style=svg)](https://circleci.com/gh/CarlosAndresTambascia/flightsapi)
+[![CircleCI](https://circleci.com/gh/CarlosAndresTambascia/flightsapi.svg?style=svg&circle-token=2e1d732df4b4844d17e2f9d3ecb618f32e203e07)](https://circleci.com/gh/CarlosAndresTambascia/flightsapi)
 
 ### The project 
 
