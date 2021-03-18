@@ -1,5 +1,7 @@
 package com.carlostambascia.controller;
 
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
+
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
 import com.carlostambascia.service.FlightService;
@@ -7,14 +9,22 @@ import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
-
-@RestController
+@Controller
 @RequestMapping(value = "/api/flight")
 @RequiredArgsConstructor
 public class FlightController {
@@ -46,11 +56,12 @@ public class FlightController {
     }
 
     @GetMapping(value = "/", params = "scheduledDepartureDateTime")
-    public ResponseEntity<?> getByDepartureDate(@RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
-        return Try.of(() -> flightService.getFlightsByDate(scheduledDepartureDateTime))
+    public ModelAndView getByDepartureDate(@RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
+        final List<Flight> flightsFound = Try.of(() -> flightService.getFlightsByDate(scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
-                .map(flights -> ResponseEntity.ok().body(flights))
-                .getOrElse(ResponseEntity.notFound().build());
+                .getOrElse(Collections.emptyList());
+        final ModelAndView mav = new ModelAndView("listOfFlights");
+        return mav.addObject("flightsFound", flightsFound);
     }
 
     @GetMapping(value = "/", params = {"scheduledDepartureDateTime", "departureIataCode"})
