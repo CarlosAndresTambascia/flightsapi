@@ -1,6 +1,6 @@
 # Spring MVC Application:
 
-[![CircleCI](https://circleci.com/gh/CarlosAndresTambascia/flightsapi.svg?style=svg)](https://circleci.com/gh/springframeworkguru/spring5-recipe-app)
+[![CircleCI](https://circleci.com/gh/CarlosAndresTambascia/flightsapi.svg?style=svg)](https://circleci.com/gh/CarlosAndresTambascia/flightsapi)
 
 ### The project 
 
