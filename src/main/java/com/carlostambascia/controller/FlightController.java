@@ -56,6 +56,14 @@ public class FlightController {
     }
 
     @GetMapping(value = "/", params = "scheduledDepartureDateTime")
+    public ResponseEntity<?> getByDepartureDateView(@RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
+        return Try.of(() -> flightService.getFlightsByDate(scheduledDepartureDateTime))
+                .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
+                .map(flights -> ResponseEntity.ok().body(flights))
+                .getOrElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/view/", params = "scheduledDepartureDateTime")
     public ModelAndView getByDepartureDate(@RequestParam("scheduledDepartureDateTime") @DateTimeFormat(iso = DATE) Date scheduledDepartureDateTime) {
         final List<Flight> flightsFound = Try.of(() -> flightService.getFlightsByDate(scheduledDepartureDateTime))
                 .filter(flights -> Objects.nonNull(flights) && !flights.isEmpty())
