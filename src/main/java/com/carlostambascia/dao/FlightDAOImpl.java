@@ -46,7 +46,7 @@ public class FlightDAOImpl implements FlightDAO {
     public List<Flight> getFlightsFromDepartureByDate(String iataCodeDeparture, Date date) {
         final String hql = "from Flight f where f.scheduledDepartureDateTime = ? AND f.departureCity.iataCode = ?";
         return getCurrentSession().createQuery(hql)
-                .setParameter(0, new Date(date.getTime() + (1000 * 60 * 60 * 24)))
+                .setParameter(0, new Date(Option.of(date).map(date1 -> date1.getTime() + (1000 * 60 * 60 * 24)).getOrElse(0L)))
                 .setParameter(1, iataCodeDeparture)
                 .list();
     }
@@ -56,7 +56,7 @@ public class FlightDAOImpl implements FlightDAO {
         final String hql = "from Flight f where f.destinationCity.iataCode = ? AND f.scheduledDepartureDateTime = ?";
         return getCurrentSession().createQuery(hql)
                 .setParameter(0, iataCodeDestination)
-                .setParameter(1, new Date(date.getTime() + (1000 * 60 * 60 * 24)))
+                .setParameter(1, new Date(Option.of(date).map(date1 -> date1.getTime() + (1000 * 60 * 60 * 24)).getOrElse(0L)))
                 .list();
     }
 
@@ -65,7 +65,7 @@ public class FlightDAOImpl implements FlightDAO {
         final String hql = "from Flight f where f.airline = ? AND f.scheduledDepartureDateTime = ?";
         return getCurrentSession().createQuery(hql)
                 .setParameter(0, airline)
-                .setParameter(1, new Date(date.getTime() + (1000 * 60 * 60 * 24)))
+                .setParameter(1, new Date(Option.of(date).map(date1 -> date1.getTime() + (1000 * 60 * 60 * 24)).getOrElse(0L)))
                 .list();
     }
 
