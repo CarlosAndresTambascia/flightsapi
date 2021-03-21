@@ -48,7 +48,6 @@ public class FlightServiceImplTest {
         final List<Flight> flightsByDate = flightService.getFlightsByDate(DATE_TIME);
         //then
         assertThat(flightsByDate).hasSize(1);
-        assertThat(flightsByDate).usingRecursiveComparison().isEqualTo(flight);
         assertThat(flightsByDate).satisfies(flights -> {
             assertThat(flights.get(0).getFlightNumber()).isEqualTo(FLIGHT_NUMBER);
             assertThat(flights.get(0).getDepartureCity().getIataCode()).isEqualTo(DEPARTURE_IATA_CODE);
