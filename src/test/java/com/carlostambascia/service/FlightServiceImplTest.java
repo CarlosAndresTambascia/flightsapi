@@ -1,10 +1,5 @@
 package com.carlostambascia.service;
 
-import static com.carlostambascia.model.FlightStatus.NOT_DELAYED;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.openMocks;
-
 import com.carlostambascia.dao.FlightDAO;
 import com.carlostambascia.model.City;
 import com.carlostambascia.model.Flight;
@@ -16,6 +11,11 @@ import org.testng.annotations.Test;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+
+import static com.carlostambascia.model.FlightStatus.NOT_DELAYED;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class FlightServiceImplTest {
     private static final BigDecimal ECONOMY = BigDecimal.valueOf(80);
@@ -48,6 +48,7 @@ public class FlightServiceImplTest {
         final List<Flight> flightsByDate = flightService.getFlightsByDate(DATE_TIME);
         //then
         assertThat(flightsByDate).hasSize(1);
+        assertThat(flightsByDate).usingRecursiveComparison().isEqualTo(flight);
         assertThat(flightsByDate).satisfies(flights -> {
             assertThat(flights.get(0).getFlightNumber()).isEqualTo(FLIGHT_NUMBER);
             assertThat(flights.get(0).getDepartureCity().getIataCode()).isEqualTo(DEPARTURE_IATA_CODE);

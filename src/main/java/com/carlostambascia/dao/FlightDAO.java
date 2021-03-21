@@ -2,10 +2,12 @@ package com.carlostambascia.dao;
 
 import com.carlostambascia.model.Flight;
 import com.carlostambascia.model.FlightPrice;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
+@Transactional
 public interface FlightDAO {
     List<Flight> getFlightsByDate(Date date);
     Flight getFlightsById(Integer flightNumber);
