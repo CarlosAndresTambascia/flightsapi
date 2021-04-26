@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.inject.Named;
+import java.util.List;
 import java.util.*;
 
 import static io.vavr.API.*;

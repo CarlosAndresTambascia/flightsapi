@@ -24,7 +24,7 @@ public class AuthenticationController implements JwtCommon {
     private final UserServiceImpl usrService;
 
     @PostMapping("/")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) {
+    public ResponseEntity<AuthResponse> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) {
         return Try.of(() -> authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUserName(), authenticationRequest.getPassword())))
                 .filter(Objects::nonNull)
                 .map(authenticatedUser -> usrService.loadUserByUsername(authenticatedUser.getName()))

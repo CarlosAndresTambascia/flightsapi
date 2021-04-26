@@ -1,8 +1,8 @@
 version: '3.1' #version of Docker-compose
 services: #specifies 2 microservices "web" and "postgresql"
   postgres:
-    image: postgres:13 # Expose a mysql image
-    ports: ["8888:5432"] # Expose port 8888
+    image: postgres:13 # Expose a postgress image
+    ports: ["5432:5432"] # Expose port 8888
     hostname: postgres
     environment: # root username and password
       - POSTGRES_USER=postgres
@@ -12,7 +12,7 @@ services: #specifies 2 microservices "web" and "postgresql"
     build:
       context: .
       dockerfile: dockerfile
-    ports: ["5555:8080"] # expose port 5555 for the rest client to connect to
+    ports: ["8080:8080"] # expose port 5555 for the rest client to connect to
     hostname: web
     tty: true
     depends_on:
@@ -20,4 +20,4 @@ services: #specifies 2 microservices "web" and "postgresql"
     links:
       - postgres
     environment:
-      - DB_PORT=tcp://postgre:5432
+      - DB_PORT=tcp://localhost:5432/flightsapi

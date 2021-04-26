@@ -10,8 +10,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter(value = AccessLevel.PACKAGE)
-@Getter
+@Data
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

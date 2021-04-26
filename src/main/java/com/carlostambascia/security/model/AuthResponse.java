@@ -9,5 +9,4 @@ import java.io.Serializable;
 @Getter
 public class AuthResponse implements Serializable {
     private final String jtw;
-
 }
